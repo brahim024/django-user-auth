@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from .models import Profile
-from .forms import SignupForm
+from .forms import SignupForm, UserForm, ProfileForm
 from django.contrib.auth import login , authenticate
 # Create your views here.
 def signup(request):
@@ -22,7 +22,12 @@ def profile(request):
     return render(request,'profile/profile.html',{'profile':profile})
 def profile_edit(request):
     if request.method=='POST':
-        pass
+        user_form= UserForm(request.POST)
+        profile_form= ProfileForm(request.POST)
     else:
-        pass
-    return render(request,'profile/profile_edite.html')
+        user_form=UserForm()
+        profile_form=ProfileForm()
+    return render(request,'profile/profile_edit.html',{
+        'userform':user_form,
+        'profileform':profile_form,
+    })
