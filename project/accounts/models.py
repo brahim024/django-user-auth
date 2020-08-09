@@ -10,9 +10,11 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 @receiver(post_save, sender=User)
+#add signal
 def my_call(sender,instance,created,**kwargs):
     if created:
         Profile.objects.create(
             user=instance
+
         )
     
