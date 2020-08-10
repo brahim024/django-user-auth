@@ -1,1 +1,1 @@
-# django-job-boards
+# django-user-authentications
