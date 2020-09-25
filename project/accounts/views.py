@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect
 from .models import Profile
+from django.http import HttpResponse
 from .forms import SignupForm, UserForm, ProfileForm
 from django.contrib.auth import login , authenticate
 # Create your views here.
@@ -12,7 +13,18 @@ def signup(request):
             username=form.cleaned_data['username']
             password=form.cleaned_data['password1']
             user=authenticate(username=username, password=password)
-            login (request,user)
+            
+            if user is not None:
+                if user.is_active:
+                    login(request,user)
+                    return HttpResponse('Authenticated','succesfully')
+                else:
+                    return HttpResponse('Desibled account')
+
+            else:
+                return HttpResponse('Invelid login')
+
+
             return redirect('/accounts/profile')
     else: #show form
         form=SignupForm()
